@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bücherei.Lib", "Bücherei.Lib\Bücherei.Lib.csproj", "{9DD7C50E-32A5-4A8B-BB14-14F4A902AF68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bücherei.Cli", "Bücherei.Cli\Bücherei.Cli.csproj", "{792643CE-0698-4661-BF75-5A97B8B27872}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9DD7C50E-32A5-4A8B-BB14-14F4A902AF68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DD7C50E-32A5-4A8B-BB14-14F4A902AF68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DD7C50E-32A5-4A8B-BB14-14F4A902AF68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DD7C50E-32A5-4A8B-BB14-14F4A902AF68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{792643CE-0698-4661-BF75-5A97B8B27872}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{792643CE-0698-4661-BF75-5A97B8B27872}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{792643CE-0698-4661-BF75-5A97B8B27872}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{792643CE-0698-4661-BF75-5A97B8B27872}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
