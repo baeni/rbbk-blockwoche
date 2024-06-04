@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-
 namespace Bücherei.Lib.Entities;
 
 public class Bücherei
