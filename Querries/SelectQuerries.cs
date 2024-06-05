@@ -1,6 +1,11 @@
+using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.Text.Json;
 using Bücherei.Lib.Entities;
+using Microsoft.Extensions.Logging;
 using Npgsql;
+using Xunit.Abstractions;
 
 namespace Querries
 {
@@ -9,14 +14,13 @@ namespace Querries
         private static string ConnectionString = "Host=localhost;Port=54321;Database=postgres;Username=postgres;Password=password123";
         private NpgsqlDataSource? DataSource;
 
-        public SelectQuerries()
+        private readonly ITestOutputHelper _output;
+
+        public SelectQuerries(ITestOutputHelper helper)
         {
-            //using var con = DataSource.OpenConnection();
+            this._output = helper;
 
-
-
-            //CreateDatabaseSetup().Wait();
-
+            CreateDatabaseSetup().Wait();
         }
 
         private async Task CreateDatabaseSetup()
@@ -81,20 +85,81 @@ namespace Querries
             await using var buchobjekteInsertCmd = DataSource.CreateCommand("INSERT INTO buchobjekte (buchobjekt) VALUES " +
                                                                        $"('{JsonSerializer.Serialize(buch)}')");
             await buchobjekteInsertCmd.ExecuteNonQueryAsync();
+        }
 
+        //X
+        [Fact]
+        public async Task GetAllBookDataX()
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            await GetAllBookDataAsyncX();
+            sw.Stop();
+            _output.WriteLine(sw.ElapsedMilliseconds.ToString());
+        }
 
+        private async Task GetAllBookDataAsyncX()
+        {
+            await using var bücherSelectCmd = DataSource!.CreateCommand(
+                "SELECT * " +
+                "FROM bücher " +
+                "WHERE Titel = 'Max und Moritz';"
+            );
 
+            var list = new List<object>();
 
+            await using (var reader = await bücherSelectCmd.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    list.Add(reader.GetInt32(0));
+                }
+            }
+        }
+
+        //3
+        [Fact]
+        public async Task GetAllBookData3()
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            await GetAllBookDataAsync3();
+            sw.Stop();
+            _output.WriteLine(sw.ElapsedMilliseconds.ToString());
+        }
+
+        private async Task GetAllBookDataAsync3()
+        {
+            await using var bücherSelectCmd = DataSource!.CreateCommand(
+                "SELECT * " +
+                "FROM bücher " +
+                "WHERE Titel = 'Max und Moritz';"
+            );
+
+            var list = new List<object>();
+
+            await using (var reader = await bücherSelectCmd.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    list.Add(reader.GetInt32(0));
+                }
+
+            }
         }
 
 
         [Fact]
         public async Task GetAllBookData()
         {
-            await CreateDatabaseSetup();
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             await GetAllBookDataAsync();
+            sw.Stop();
+            _output.WriteLine(sw.ElapsedMilliseconds.ToString());
         }
 
+        //1
         private async Task GetAllBookDataAsync()
         {
             await using var bücherSelectCmd = DataSource!.CreateCommand(
@@ -103,14 +168,18 @@ namespace Querries
                 "WHERE Titel = 'Max und Moritz';"
             );
 
+            var list = new List<object>();
+
             await using (var reader = await bücherSelectCmd.ExecuteReaderAsync())
             {
                 while (await reader.ReadAsync())
                 {
-                    Console.WriteLine(reader.GetInt32(0));
+                    list.Add(reader.GetInt32(0));
                 }
             }
         }
+
+
 
     }
 }
