@@ -95,13 +95,9 @@ namespace Querries
             await GetAllBookDataAsync();
         }
 
-
         private async Task GetAllBookDataAsync()
         {
-            DataSource.OpenConnection();
-
-            //UNIT TEST
-            await using var bücherSelectCmd = DataSource.CreateCommand(
+            await using var bücherSelectCmd = DataSource!.CreateCommand(
                 "SELECT * " +
                 "FROM bücher " +
                 "WHERE Titel = 'Max und Moritz';"
@@ -114,8 +110,6 @@ namespace Querries
                     Console.WriteLine(reader.GetInt32(0));
                 }
             }
-
-            DataSource.Dispose();
         }
 
     }
