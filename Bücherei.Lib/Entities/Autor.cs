@@ -2,6 +2,8 @@ namespace Bücherei.Lib.Entities;
 
 public class Autor
 {
+    public Autor() {}
+    
     public int Id { get; set; }
 
     public string Vorname { get; set; } = null!;

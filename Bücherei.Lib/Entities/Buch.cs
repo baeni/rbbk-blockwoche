@@ -2,11 +2,13 @@ namespace Bücherei.Lib.Entities;
 
 public class Buch
 {
+    public Buch() {}
+
     public int Id { get; set; }
 
     public string Titel { get; set; } = null!;
     
-    public Autor Autor { get; set; } = null!;
+    public int AutorId { get; set; }
 
-    public Bücherei Bücherei { get; set; } = null!;
+    public int BüchereiId { get; set; }
 }
