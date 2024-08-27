@@ -1,5 +1,5 @@
 using System.Text.Json;
-using Bücherei.Lib.Entities;
+using Bücherei.Lib.EntitiesRelational;
 using Npgsql;
 
 namespace Bücherei.Lib.Services;
@@ -86,7 +86,6 @@ public class SampleDataService
             cmd.Parameters.AddWithValue("id", buch.Id);
             cmd.Parameters.AddWithValue("titel", buch.Titel);
             cmd.Parameters.AddWithValue("autorId", buch.AutorId);
-            cmd.Parameters.AddWithValue("büchereiId", buch.BüchereiId);
             await cmd.ExecuteNonQueryAsync();
         }
     }
