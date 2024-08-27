@@ -9,4 +9,6 @@ public class Autor
     public string Vorname { get; set; } = null!;
 
     public string Nachname { get; set; } = null!;
+
+    public ICollection<Buch> Bücher { get; set; } = [];
 }

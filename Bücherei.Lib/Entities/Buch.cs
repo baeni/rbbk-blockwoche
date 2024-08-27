@@ -10,5 +10,5 @@ public class Buch
     
     public int AutorId { get; set; }
 
-    public int BüchereiId { get; set; }
+    public required Autor Autor { get; set; }
 }
