@@ -1,4 +1,4 @@
-namespace Bücherei.Lib.Entities;
+namespace Bücherei.Lib.EntitiesRelational;
 
 public class Autor
 {
@@ -11,4 +11,6 @@ public class Autor
     public string Nachname { get; set; } = null!;
 
     public ICollection<Buch> Bücher { get; set; } = [];
+
+    public ICollection<Bücherei> Büchereien { get; set; } = [];
 }

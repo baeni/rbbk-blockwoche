@@ -1,4 +1,4 @@
-namespace Bücherei.Lib.Entities;
+namespace Bücherei.Lib.EntitiesRelational;
 
 public class SampleData
 {
