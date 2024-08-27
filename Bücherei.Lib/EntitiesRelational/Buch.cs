@@ -2,8 +2,6 @@ namespace Bücherei.Lib.EntitiesRelational;
 
 public class Buch
 {
-    public Buch() {}
-
     public int Id { get; set; }
 
     public string Titel { get; set; } = null!;
