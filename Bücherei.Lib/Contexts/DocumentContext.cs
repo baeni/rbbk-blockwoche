@@ -16,4 +16,9 @@ public class DocumentContext : DbContext
                 c.OwnsMany(d => d.Bücher);
             });
     }
+    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseNpgsql("Host=localhost;Port=54322;Database=postgres-buecherdocs;Username=postgres;Password=password1234");
+    }
 }
