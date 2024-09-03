@@ -8,6 +8,6 @@ public class Autor
 
     public required string Nachname { get; set; }
 
-    public ICollection<Buch> Bücher { get; set; } = [];
+    public ICollection<Buch> Buecher { get; set; } = [];
 
 }

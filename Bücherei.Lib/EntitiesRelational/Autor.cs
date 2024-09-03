@@ -10,7 +10,7 @@ public class Autor
 
     public string Nachname { get; set; } = null!;
 
-    public ICollection<Buch> Bücher { get; set; } = [];
+    public ICollection<Buch> Buecher { get; set; } = [];
 
-    public ICollection<Bücherei> Büchereien { get; set; } = [];
+    public ICollection<BuechereiRel> Buechereien { get; set; } = [];
 }

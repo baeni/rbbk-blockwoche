@@ -1,6 +1,6 @@
 namespace Bücherei.Lib.EntitiesRelational;
 
-public class Bücherei
+public class BuechereiRel
 {   
     public int Id { get; set; }
 

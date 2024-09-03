@@ -5,26 +5,31 @@ namespace Bücherei.Lib.Contexts;
 
 public class RelationalContext : DbContext
 {
-    public DbSet<EntitiesRelational.Bücherei> Büchereien => Set<EntitiesRelational.Bücherei>();
+    public DbSet<BuechereiRel> Buechereien => Set<BuechereiRel>();
 
     public DbSet<Autor> Autoren => Set<Autor>();
 
-    public DbSet<Buch> Bücher => Set<Buch>();
+    public DbSet<Buch> Buecher => Set<Buch>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<EntitiesRelational.Bücherei>()
+        modelBuilder.Entity<BuechereiRel>()
+            .ToTable("buechereien")
             .HasMany(b => b.Autoren)
-            .WithMany(a => a.Büchereien);
+            .WithMany(a => a.Buechereien);
 
         modelBuilder.Entity<Autor>()
-            .HasMany(autor => autor.Bücher)
+            .ToTable("autoren")
+            .HasMany(autor => autor.Buecher)
             .WithOne(buch => buch.Autor)
             .HasForeignKey(buch => buch.AutorId);
+
+        modelBuilder.Entity<Buch>()
+            .ToTable("buecher");
     }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql("Host=localhost;Port=54321;Database=postgres-buechereien;Username=postgres;Password=password1234");
+        optionsBuilder.UseNpgsql("Host=localhost;Port=54321;Database=postgres-buechereien-rel;Username=postgres;Password=password1234");
     }
 }

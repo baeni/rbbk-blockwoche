@@ -1,6 +1,6 @@
 ﻿namespace Bücherei.Lib.EntitiesDocument;
 
-public class BüchereiDoc
+public class BuechereiDoc
 {
     public int Id { get; set; }
 
