@@ -3,7 +3,7 @@ using Bücherei.Lib.EntitiesRelational;
 
 namespace Bücherei.Lib.Contexts;
 
-internal class RelationalContext : DbContext
+public class RelationalContext : DbContext
 {
     public DbSet<EntitiesRelational.Bücherei> Büchereien => Set<EntitiesRelational.Bücherei>();
 
@@ -21,5 +21,10 @@ internal class RelationalContext : DbContext
             .HasMany(autor => autor.Bücher)
             .WithOne(buch => buch.Autor)
             .HasForeignKey(buch => buch.AutorId);
+    }
+    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseNpgsql("Host=localhost;Port=54321;Database=postgres-buechereien;Username=postgres;Password=password1234");
     }
 }
