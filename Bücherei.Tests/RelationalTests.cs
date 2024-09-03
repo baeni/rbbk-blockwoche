@@ -1,33 +1,18 @@
-using Bücherei.Lib.Services;
-using Npgsql;
 using System.Diagnostics;
+using Bücherei.Lib.Contexts;
 using Xunit.Abstractions;
 
 namespace Bücherei.Tests;
 
 public class RelationalTests
 {
-    private const string ConnectionString = "Host=localhost;Port=54321;Database=postgres;Username=postgres;Password=password123";
-    private readonly NpgsqlDataSource? _dataSource;
-
+    private readonly RelationalContext _context;
     private readonly ITestOutputHelper _output;
 
     public RelationalTests(ITestOutputHelper helper)
     {
-        _dataSource = NpgsqlDataSource.Create(ConnectionString);
+        _context = new RelationalContext();
         _output = helper;
-        
-        CreateDatabaseSetup().Wait();
-    }
-
-    private async Task CreateDatabaseSetup()
-    {
-        var sampleDataService = new SampleDataService(
-            connectionString: "Host=localhost;Port=54321;Database=postgres;Username=postgres;Password=password123",
-            sampleDataJsonPath: "../../../../Bücherei.Cli/sample-data.json");
-
-        await sampleDataService.RecreateTablesAsync();
-        await sampleDataService.FillTablesWithSampleDataAsync();
     }
 
     //X
@@ -90,6 +75,7 @@ public class RelationalTests
         return data;
     }
 
+    //1
     [Fact]
     public async Task GetAllBookData()
     {
@@ -100,7 +86,6 @@ public class RelationalTests
         _output.WriteLine($"The Db operation took {watch.ElapsedMilliseconds}ms");
     }
 
-    //1
     private async Task<ICollection<object>> GetAllBookDataAsync()
     {
         await using var bücherSelectCmd = _dataSource!.CreateCommand(

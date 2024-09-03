@@ -1,19 +1,17 @@
 using System.Diagnostics;
-using Npgsql;
+using Bücherei.Lib.Contexts;
 using Xunit.Abstractions;
 
 namespace Bücherei.Tests;
 
-public class ObjectOrientedTests
+public class DocumentTests
 {
-    private const string ConnectionString = "Host=localhost;Port=54321;Database=postgres;Username=postgres;Password=password123";
-    private readonly NpgsqlDataSource? _dataSource;
-
+    private readonly DocumentContext _context;
     private readonly ITestOutputHelper _output;
 
-    public ObjectOrientedTests(ITestOutputHelper helper)
+    public DocumentTests(ITestOutputHelper helper)
     {
-        _dataSource = NpgsqlDataSource.Create(ConnectionString);
+        _context = new DocumentContext();
         _output = helper;
     }
 
