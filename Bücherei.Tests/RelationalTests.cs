@@ -29,8 +29,10 @@ public class RelationalTests
 
     private async Task CreateBuechereiAsync()
     {
-        var buecherei = new BuechereiRel();
-        buecherei.Name = "Benny's Buecherei";
+        var buecherei = new BuechereiRel() {
+            Name = "Benny's Buecherei"
+        };
+
         //buecherei.Autoren = new Autor[] { new Autor(), new Autor() };
 
         _context.Buechereien.Add(buecherei);

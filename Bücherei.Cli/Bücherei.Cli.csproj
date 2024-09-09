@@ -20,6 +20,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Update="sample-data-hybrid-throwaway.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
       <None Update="sample-data.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>

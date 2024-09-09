@@ -4,10 +4,7 @@ public class Autor
 {
     public int Id { get; set; }
 
-    public required string Vorname { get; set; }
-
-    public required string Nachname { get; set; }
+    public required string Name { get; set; }
 
     public ICollection<Buch> Buecher { get; set; } = [];
-
 }
