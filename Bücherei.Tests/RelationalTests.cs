@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Bücherei.Lib.Contexts;
+using Bücherei.Lib.EntitiesRelational;
 using Xunit.Abstractions;
 
 namespace Bücherei.Tests;
@@ -17,91 +18,22 @@ public class RelationalTests
 
     //X
     [Fact]
-    public async Task GetAllBookDataX()
+    public async Task CreateBuecherei()
     {
         var watch = new Stopwatch();
         watch.Start();
-        var data = await GetAllBookDataAsyncX();
+        await CreateBuechereiAsync();
         watch.Stop();
         _output.WriteLine($"The Db operation took {watch.ElapsedMilliseconds}ms");
     }
 
-    private async Task<ICollection<object>> GetAllBookDataAsyncX()
+    private async Task CreateBuechereiAsync()
     {
-        await using var bücherSelectCmd = _dataSource!.CreateCommand(
-            "SELECT * " +
-            "FROM bücher " +
-            "WHERE Titel = 'Max und Moritz';"
-        );
+        var buecherei = new BuechereiRel();
+        buecherei.Name = "Benny's Buecherei";
+        //buecherei.Autoren = new Autor[] { new Autor(), new Autor() };
 
-        var data = new List<object>();
-
-        await using var reader = await bücherSelectCmd.ExecuteReaderAsync();
-        while (await reader.ReadAsync())
-        {
-            data.Add(reader.GetInt32(0));
-        }
-
-        return data;
-    }
-
-    //3
-    [Fact]
-    public async Task GetAllBookData3()
-    {
-        var watch = new Stopwatch();
-        watch.Start();
-        var data = await GetAllBookDataAsync3();
-        watch.Stop();
-        _output.WriteLine($"The Db operation took {watch.ElapsedMilliseconds}ms");
-    }
-
-    private async Task<ICollection<object>> GetAllBookDataAsync3()
-    {
-        await using var bücherSelectCmd = _dataSource!.CreateCommand(
-            "SELECT * " +
-            "FROM bücher " +
-            "WHERE Titel = 'Max und Moritz';"
-        );
-
-        var data = new List<object>();
-
-        await using var reader = await bücherSelectCmd.ExecuteReaderAsync();
-        while (await reader.ReadAsync())
-        {
-            data.Add(reader.GetInt32(0));
-        }
-
-        return data;
-    }
-
-    //1
-    [Fact]
-    public async Task GetAllBookData()
-    {
-        var watch = new Stopwatch();
-        watch.Start();
-        var data = await GetAllBookDataAsync();
-        watch.Stop();
-        _output.WriteLine($"The Db operation took {watch.ElapsedMilliseconds}ms");
-    }
-
-    private async Task<ICollection<object>> GetAllBookDataAsync()
-    {
-        await using var bücherSelectCmd = _dataSource!.CreateCommand(
-            "SELECT * " +
-            "FROM bücher " +
-            "WHERE Titel = 'Max und Moritz';"
-        );
-
-        var data = new List<object>();
-
-        await using var reader = await bücherSelectCmd.ExecuteReaderAsync();
-        while (await reader.ReadAsync())
-        {
-            data.Add(reader.GetInt32(0));
-        }
-
-        return data;
+        _context.Buechereien.Add(buecherei);
+        await _context.SaveChangesAsync();
     }
 }
