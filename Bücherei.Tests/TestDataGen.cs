@@ -76,7 +76,7 @@ public class TestDataGen
     [Fact]
     public void CreateRelBooks()
     {
-        var data = SampleData.Get();
+        var data = SampleData.GetRaw();
 
         var newBuechereien = new List<Rel.BuechereiRel>();
         foreach (SampleData.Buecherei lib in data.Buechereien)
@@ -98,7 +98,7 @@ public class TestDataGen
                 Id = aut.Id,
                 Name = aut.Name,
                 Buecher = Array.Empty<Rel.Buch>(),
-                büch
+                Buechereien = aut.BuechereiId
 
             };
             newAutoren.Add(newAutor);

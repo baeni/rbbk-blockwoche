@@ -6,6 +6,8 @@ using Doc = Bücherei.Lib.EntitiesDocument;
 using Rel = Bücherei.Lib.EntitiesRelational;
 using Bücherei.Lib.EntitiesDocument;
 using Bücherei.Lib.EntitiesRelational;
+using Microsoft.EntityFrameworkCore;
+using static Bücherei.Lib.Services.SampleData;
 
 namespace Bücherei.Lib.Services;
 
@@ -35,7 +37,7 @@ public class SampleData
         public int Id { get; set; }
         public string Name { get; set; }
         public int[] Buecher { get; set; }
-        public int BuechereiId { get; set; }
+        public int[] BuechereiIds { get; set; }
     }
 
     public class Buch
@@ -45,7 +47,7 @@ public class SampleData
         public int AutorId { get; set; }
     }
 
-    public static SampleData Get()
+    public static SampleData GetRaw()
     {
         var sampleDataJson = File.ReadAllText("./sample-data-hybrid.json");
         var _sampleData = JsonSerializer.Deserialize<SampleData>(sampleDataJson);
@@ -64,6 +66,57 @@ public class SampleData
 
         return book;
     }
+
+    public static SampleDataRel GetRel()
+    {
+        var data = SampleData.GetRaw();
+
+        var relData = new SampleDataRel();
+
+        var newBuechereien = new List<Rel.BuechereiRel>();
+        foreach (SampleData.Buecherei lib in data.Buechereien)
+        {
+            var newLib = new Rel.BuechereiRel()
+            {
+                Id = lib.Id,
+                Name = lib.Name,
+                Autoren = Array.Empty<Rel.Autor>()
+            };
+            newBuechereien.Add(newLib);
+        }
+
+        var newAutoren = new List<Rel.Autor>();
+        foreach (SampleData.Autor aut in data.Autoren)
+        {
+            var buechereiIds = new List<Rel.BuechereiRel>();
+            foreach (var buechereiId in aut.BuechereiIds)
+            {
+                var buecherei = new BuechereiRel();
+                buechereiIds.Add()   
+            }
+            
+            var newAutor = new Rel.Autor()
+            {
+                Id = aut.Id,
+                Name = aut.Name,
+                Buecher = Array.Empty<Rel.Buch>(),
+                Buechereien = Array.Empty<Rel.BuechereiRel>()
+            };
+            newAutoren.Add(newAutor);
+        }
+
+        var newBuecher = new List<Rel.Buch>();
+        foreach (SampleData.Buch buch in data.Buecher)
+        {
+            var newBuch = new Rel.Buch()
+            {
+                Autor = buch.Id
+                b
+            };
+            newAutoren.Add(newAutor);
+        }
+    }
+
 
 }
 

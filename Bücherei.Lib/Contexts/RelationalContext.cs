@@ -1,5 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Doc = Bücherei.Lib.EntitiesDocument;
+using Rel = Bücherei.Lib.EntitiesRelational;
 using Bücherei.Lib.EntitiesRelational;
+using Bücherei.Lib.Services;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Bücherei.Lib.Contexts;
 
@@ -26,6 +30,14 @@ public class RelationalContext : DbContext
 
         modelBuilder.Entity<Buch>()
             .ToTable("buecher");
+
+        var data = SampleData.GetRel();
+
+
+        //var author = new Rel.Autor() { Id = 3124342 };
+        //modelBuilder.Entity<Autor>().HasData(new Autor())
+        
+
     }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

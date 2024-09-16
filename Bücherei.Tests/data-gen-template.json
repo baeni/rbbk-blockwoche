@@ -1,0 +1,28 @@
+﻿{
+  "Buechereien": [
+    "{{repeat(5)}}",
+    {
+      "Id": "{{index()}}",
+      "Name": "{{firstName()}} {{lorem(1, \"words\")}}"
+    }
+  ],
+  "Authoren": [
+    "{{repeat(100)}}",
+    {
+      "Id": "{{index()}}",
+      "Name": "{{firstName()}} {{surname()}}",
+      "Buechereien": [
+        "{{repeat(1, 3)}}",
+        "{{integer(0,4)}}"
+      ]
+    }
+  ],
+  "Buecher": [
+    "{{repeat(500)}}",
+    {
+      "Id": "{{index()}}",
+      "Title": "{{lorem(1, \"words\")}} {{city()}}",
+      "AutorId": "{{integer(0,99)}}"
+    }
+  ]
+}
