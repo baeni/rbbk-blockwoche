@@ -3,7 +3,6 @@ using Doc = Bücherei.Lib.EntitiesDocument;
 using Rel = Bücherei.Lib.EntitiesRelational;
 using Bücherei.Lib.EntitiesRelational;
 using Bücherei.Lib.Services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Bücherei.Lib.Contexts;
 
@@ -18,6 +17,15 @@ public class RelationalContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<BuechereiRel>()
+            .HasKey(b => b.BuechereiId);
+
+        modelBuilder.Entity<Autor>()
+            .HasKey(b => b.AutorId);
+
+        modelBuilder.Entity<Buch>()
+            .HasKey(b => b.BuchId);
+
+        modelBuilder.Entity<BuechereiRel>()
             .ToTable("buechereien")
             .HasMany(b => b.Autoren)
             .WithMany(a => a.Buechereien);
@@ -31,17 +39,26 @@ public class RelationalContext : DbContext
         modelBuilder.Entity<Buch>()
             .ToTable("buecher");
 
-        var data = SampleData.GetRel();
+
+        modelBuilder.Entity<AutorBuecherei>()
+            .HasKey(ab => new { ab.AutorId, ab.BuechereiId });
 
 
-        //var author = new Rel.Autor() { Id = 3124342 };
-        //modelBuilder.Entity<Autor>().HasData(new Autor())
-        
+        modelBuilder.Entity<BuechereiRel>()
+            .HasMany(e => e.Autoren)
+            .WithMany(e => e.Buechereien)
+            .UsingEntity<AutorBuecherei>();
+
+
+
+
+        modelBuilder.SeedRel();
 
     }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder.UseNpgsql("Host=localhost;Port=54321;Database=postgres-buechereien-rel;Username=postgres;Password=password1234");
     }
 }

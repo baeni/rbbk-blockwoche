@@ -2,27 +2,28 @@
   "Buechereien": [
     "{{repeat(5)}}",
     {
-      "Id": "{{index()}}",
+      "Id": "{{index(1)}}",
       "Name": "{{firstName()}} {{lorem(1, \"words\")}}"
     }
   ],
-  "Authoren": [
+  "Autoren": [
     "{{repeat(100)}}",
     {
-      "Id": "{{index()}}",
-      "Name": "{{firstName()}} {{surname()}}",
-      "Buechereien": [
+      "Id": "{{index(1)}}",
+      "Firstname": "{{firstName()}}",
+      "Surname": "{{firstName()}}",
+      "BuechereiIds": [
         "{{repeat(1, 3)}}",
-        "{{integer(0,4)}}"
+        "{{integer(1,5)}}"
       ]
     }
   ],
   "Buecher": [
     "{{repeat(500)}}",
     {
-      "Id": "{{index()}}",
+      "Id": "{{index(1)}}",
       "Title": "{{lorem(1, \"words\")}} {{city()}}",
-      "AutorId": "{{integer(0,99)}}"
+      "AutorId": "{{integer(1,100)}}"
     }
   ]
 }

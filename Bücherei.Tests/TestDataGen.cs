@@ -9,6 +9,7 @@ using Xunit.Abstractions;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Bücherei.Lib.Services;
 using static Bücherei.Lib.Services.SampleData;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bücherei.Tests;
 
@@ -64,7 +65,7 @@ public class TestDataGen
     [Fact]
     public void EmptyFact()
     {
-        var data = SampleData.Get();
+        var data = SampleData.GetRaw();
     }
 
     [Fact]
@@ -83,53 +84,29 @@ public class TestDataGen
         {
             var newLib = new Rel.BuechereiRel()
             {
-                Id = lib.Id,
+                BuechereiId = lib.Id,
                 Name = lib.Name,
                 Autoren = Array.Empty<Rel.Autor>()
             };
             newBuechereien.Add(newLib);
         }
 
-        var newAutoren = new List<Rel.Autor>();
-        foreach (SampleData.Autor aut in data.Autoren)
-        {
-            var newAutor = new Rel.Autor()
-            {
-                Id = aut.Id,
-                Name = aut.Name,
-                Buecher = Array.Empty<Rel.Buch>(),
-                Buechereien = aut.BuechereiId
 
-            };
-            newAutoren.Add(newAutor);
-        }
+    }
 
-        var newBuecher = new List<Rel.Buch>();
-        foreach (SampleData.Buch buch in data.Buecher)
-        {
-            var newBuch = new Rel.Buch()
-            {
-                Autor = buch.Id
-                b
-            };
-            newAutoren.Add(newAutor);
-        }
+    [Fact]
+    public void CreateContextRel()
+    {
+        _output.WriteLine("Start:");
 
-        foreach (SampleData.Buch buch in data.Buecher)
-        {
-            var newBuch = new Rel.Buch()
-            {
-                Autor = buch.Id
-                b
-            };
-        }
+        RelationalContext context = new RelationalContext();
 
-        this.buecherRel
+        _output.WriteLine("Hurra 1 !");
 
 
+        var builder = new ModelBuilder();
+        builder.SeedRel();
 
-
-        _context.Buechereien.Add(buecherei);
-        await _context.SaveChangesAsync();
+        _output.WriteLine("Hurra 2 !");
     }
 }

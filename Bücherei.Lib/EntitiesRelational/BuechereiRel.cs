@@ -2,7 +2,7 @@ namespace Bücherei.Lib.EntitiesRelational;
 
 public class BuechereiRel
 {   
-    public int Id { get; set; }
+    public int BuechereiId { get; set; }
 
     public required string Name { get; set; }
 

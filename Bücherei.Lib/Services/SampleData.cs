@@ -13,17 +13,12 @@ namespace Bücherei.Lib.Services;
 
 public class SampleData
 {
-    //private BuechereiRel[] buechereiRels;
-    //private Rel.Autor[] autorenRel;
-    //private Rel.Buch[] buecherRel;
-
-    //private BuechereiDoc[] buechereiDocs;
-    //private Doc.Autor[] autorenDoc;
-    //private Doc.Buch[] buecherDoc;
-
     public SampleData.Buecherei[] Buechereien { get; set; }
     public SampleData.Autor[] Autoren { get; set; }
     public SampleData.Buch[] Buecher { get; set; }
+
+    public Dictionary<int, List<int>> authorBooksIds = new();
+    public Dictionary<int, List<int>> libAuthorsIds = new();
 
     public class Buecherei
     {
@@ -35,7 +30,8 @@ public class SampleData
     public class Autor
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Firstname { get; set; }
+        public string Surname { get; set; }
         public int[] Buecher { get; set; }
         public int[] BuechereiIds { get; set; }
     }
@@ -50,10 +46,35 @@ public class SampleData
     public static SampleData GetRaw()
     {
         var sampleDataJson = File.ReadAllText("./sample-data-hybrid.json");
-        var _sampleData = JsonSerializer.Deserialize<SampleData>(sampleDataJson);
+        var sampleData = JsonSerializer.Deserialize<SampleData>(sampleDataJson);
 
-        var sampleData = new SampleData();
+        // fill all authorBooksIds
+        foreach (SampleData.Buch buch in sampleData.Buecher)
+        {
+            if (!sampleData.authorBooksIds.ContainsKey(buch.AutorId))
+            {
+                sampleData.authorBooksIds.Add(buch.AutorId, new List<int>());
+            }
 
+            var books = sampleData.authorBooksIds[buch.AutorId];
+            books.Add(buch.Id);
+        }
+
+        // fill libAuthorsIds
+        foreach (SampleData.Autor aut in sampleData.Autoren)
+        {
+            foreach (int buechereiId in aut.BuechereiIds)
+            {
+                if (!sampleData.libAuthorsIds.ContainsKey(buechereiId))
+                {
+                    sampleData.libAuthorsIds.Add(buechereiId, new List<int>());
+                }
+
+                var autIds = sampleData.libAuthorsIds[buechereiId];
+                if (!autIds.Contains(aut.Id))
+                    autIds.Add(aut.Id);
+            }
+        }
 
         return sampleData;
     }
@@ -63,58 +84,15 @@ public class SampleData
         var sampleDataJson = File.ReadAllText("./sample-data-book.json");
         var book = JsonSerializer.Deserialize<SampleData.Buch>(sampleDataJson);
 
-
         return book;
     }
 
     public static SampleDataRel GetRel()
     {
         var data = SampleData.GetRaw();
+        var relData = new SampleDataRel(data);
 
-        var relData = new SampleDataRel();
-
-        var newBuechereien = new List<Rel.BuechereiRel>();
-        foreach (SampleData.Buecherei lib in data.Buechereien)
-        {
-            var newLib = new Rel.BuechereiRel()
-            {
-                Id = lib.Id,
-                Name = lib.Name,
-                Autoren = Array.Empty<Rel.Autor>()
-            };
-            newBuechereien.Add(newLib);
-        }
-
-        var newAutoren = new List<Rel.Autor>();
-        foreach (SampleData.Autor aut in data.Autoren)
-        {
-            var buechereiIds = new List<Rel.BuechereiRel>();
-            foreach (var buechereiId in aut.BuechereiIds)
-            {
-                var buecherei = new BuechereiRel();
-                buechereiIds.Add()   
-            }
-            
-            var newAutor = new Rel.Autor()
-            {
-                Id = aut.Id,
-                Name = aut.Name,
-                Buecher = Array.Empty<Rel.Buch>(),
-                Buechereien = Array.Empty<Rel.BuechereiRel>()
-            };
-            newAutoren.Add(newAutor);
-        }
-
-        var newBuecher = new List<Rel.Buch>();
-        foreach (SampleData.Buch buch in data.Buecher)
-        {
-            var newBuch = new Rel.Buch()
-            {
-                Autor = buch.Id
-                b
-            };
-            newAutoren.Add(newAutor);
-        }
+        return relData;
     }
 
 
