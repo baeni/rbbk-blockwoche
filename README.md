@@ -1,5 +1,3 @@
-Hier ist eine angepasste Version der README, die die von dir genannten Änderungen berücksichtigt:
-
 # Datenbank-Benchmarking-Projekt
 
 ## Projektbeschreibung
