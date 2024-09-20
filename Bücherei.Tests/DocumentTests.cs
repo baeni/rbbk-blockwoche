@@ -14,5 +14,4 @@ public class DocumentTests
         _context = new DocumentContext();
         _output = helper;
     }
-
 }
