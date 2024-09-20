@@ -5,23 +5,26 @@ namespace Bücherei.Lib.EntitiesDocument;
 
 public class SampleDataDoc
 {
-    public BuechereiDoc[] buechereiDocs;
-    public Autor[] autorenDoc;
-    public Buch[] buecherDoc;
+    public BuechereiDoc[] BuechereienDoc;
+    public Autor[] AutorenDoc;
+    public Buch[] BuecherDoc;
 
-    public Dictionary<int, List<int>> authorBooksIds = new();
-    public Dictionary<int, List<int>> libAuthorsIds = new();
+    // Die Id's der Bücher, die einem Autor zugehörig sind
+    public Dictionary<int, List<int>> AutorBuchIds = new();
+    
+    // Die Id's der Autoren, die einer Bücherei zugehörig sind
+    public Dictionary<int, List<int>> BuechereiAutorIds = new();
 
     public SampleDataDoc(SampleData sampleData)
     {
-        var docBuechereien = new List<Doc.BuechereiDoc>();
-        var docAutoren = new List<Doc.Autor>();
-        var docBuecher = new List<Doc.Buch>();
+        var buechereienDoc = new List<Doc.BuechereiDoc>();
+        var autorenDoc = new List<Doc.Autor>();
+        var buecherDoc = new List<Doc.Buch>();
 
-        this.authorBooksIds = sampleData.authorBooksIds;
-        this.libAuthorsIds = sampleData.libAuthorsIds;
+        this.AutorBuchIds = sampleData.AutorBuchIds;
+        this.BuechereiAutorIds = sampleData.BuechereiAutorIds;
 
-        // make all libs
+        // make all Büchereien
         foreach (SampleData.Buecherei lib in sampleData.Buechereien)
         {
             var relLib = new Doc.BuechereiDoc()
@@ -30,11 +33,11 @@ public class SampleDataDoc
                 Name = lib.Name,
                 Autoren = Array.Empty<Doc.Autor>()
             };
-            docBuechereien.Add(relLib);
+            buechereienDoc.Add(relLib);
         }
-        this.buechereiDocs = docBuechereien.ToArray();
+        this.BuechereienDoc = buechereienDoc.ToArray();
 
-        // make all authors
+        // make all Autoren
         foreach (SampleData.Autor aut in sampleData.Autoren)
         {
             var relAutor = new Doc.Autor()
@@ -44,11 +47,11 @@ public class SampleDataDoc
                 Nachname = aut.Nachname,
                 Buecher = Array.Empty<Doc.Buch>()
             };
-            docAutoren.Add(relAutor);
+            autorenDoc.Add(relAutor);
         }
-        this.autorenDoc = docAutoren.ToArray();
+        this.AutorenDoc = autorenDoc.ToArray();
 
-        // make all books
+        // make all Bücher
         foreach (SampleData.Buch buch in sampleData.Buecher)
         {
             var relBuch = new Doc.Buch()
@@ -56,29 +59,29 @@ public class SampleDataDoc
                 Id = buch.Id,
                 Titel = buch.Title
             };
-            docBuecher.Add(relBuch);
+            buecherDoc.Add(relBuch);
         }
-        this.buecherDoc = docBuecher.ToArray();
+        this.BuecherDoc = buecherDoc.ToArray();
 
-        // assign books to authors
-        foreach (Doc.Autor aut in docAutoren)
+        // assign Bücher to Autoren
+        foreach (Doc.Autor aut in autorenDoc)
         {
-            var bookIndexes = authorBooksIds[aut.Id];
+            var bookIndexes = AutorBuchIds[aut.Id];
             var authBooks = new List<Doc.Buch>();
             foreach (int bIndex in bookIndexes) {
-                authBooks.Add(docBuecher[bIndex -1]);
+                authBooks.Add(buecherDoc[bIndex -1]);
             }
             aut.Buecher = authBooks.ToArray();
         }
 
-        //assign authors to libs
-        foreach (Doc.BuechereiDoc lib in docBuechereien)
+        // assign Autoren to Büchereien
+        foreach (Doc.BuechereiDoc lib in buechereienDoc)
         {
-            var authorIndexes = libAuthorsIds[lib.Id];
+            var authorIndexes = BuechereiAutorIds[lib.Id];
             var libAuthors = new List<Doc.Autor>();
             foreach (int aIndex in authorIndexes)
             {
-                libAuthors.Add(docAutoren[aIndex -1]);
+                libAuthors.Add(autorenDoc[aIndex -1]);
             }
             lib.Autoren = libAuthors.ToArray();
         }

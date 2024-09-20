@@ -23,10 +23,10 @@ public class SampleDataRel
         var autorenRel = new List<Rel.Autor>();
         var buecherRel = new List<Rel.Buch>();
 
-        this.AutorBuchIds = sampleData.authorBooksIds;
-        this.BuechereiAutorIds = sampleData.libAuthorsIds;
+        this.AutorBuchIds = sampleData.AutorBuchIds;
+        this.BuechereiAutorIds = sampleData.BuechereiAutorIds;
 
-        // make all libs
+        // make all Büchereien
         foreach (SampleData.Buecherei lib in sampleData.Buechereien)
         {
             var relLib = new Rel.BuechereiRel()
@@ -39,7 +39,7 @@ public class SampleDataRel
         }
         this.BuechereienRel = buechereienRel.ToArray();
 
-        // make all authors
+        // make all Autoren
         foreach (SampleData.Autor aut in sampleData.Autoren)
         {
             var relAutor = new Rel.Autor()
@@ -54,7 +54,7 @@ public class SampleDataRel
         }
         this.AutorenRel = autorenRel.ToArray();
 
-        // make all relBooks
+        // make all Bücher
         foreach (SampleData.Buch buch in sampleData.Buecher)
         {
             var relBuch = new Rel.Buch()

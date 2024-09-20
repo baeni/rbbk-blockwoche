@@ -15,8 +15,11 @@ public class SampleData
     public SampleData.Autor[] Autoren { get; set; }
     public SampleData.Buch[] Buecher { get; set; }
 
-    public Dictionary<int, List<int>> authorBooksIds = new();
-    public Dictionary<int, List<int>> libAuthorsIds = new();
+    // Die Id's der Bücher, die einem Autor zugehörig sind
+    public Dictionary<int, List<int>> AutorBuchIds = new();
+    
+    // Die Id's der Autoren, die einer Bücherei zugehörig sind
+    public Dictionary<int, List<int>> BuechereiAutorIds = new();
 
     public class Buecherei
     {
@@ -46,29 +49,29 @@ public class SampleData
         var sampleDataJson = File.ReadAllText(FILE_PATH);
         var sampleData = JsonSerializer.Deserialize<SampleData>(sampleDataJson);
 
-        // fill all authorBooksIds
+        // fill AutorBuchIds
         foreach (SampleData.Buch buch in sampleData.Buecher)
         {
-            if (!sampleData.authorBooksIds.ContainsKey(buch.AutorId))
+            if (!sampleData.AutorBuchIds.ContainsKey(buch.AutorId))
             {
-                sampleData.authorBooksIds.Add(buch.AutorId, new List<int>());
+                sampleData.AutorBuchIds.Add(buch.AutorId, new List<int>());
             }
 
-            var books = sampleData.authorBooksIds[buch.AutorId];
+            var books = sampleData.AutorBuchIds[buch.AutorId];
             books.Add(buch.Id);
         }
 
-        // fill libAuthorsIds
+        // fill BuechereiAutorIds
         foreach (SampleData.Autor aut in sampleData.Autoren)
         {
             foreach (int buechereiId in aut.BuechereiIds)
             {
-                if (!sampleData.libAuthorsIds.ContainsKey(buechereiId))
+                if (!sampleData.BuechereiAutorIds.ContainsKey(buechereiId))
                 {
-                    sampleData.libAuthorsIds.Add(buechereiId, new List<int>());
+                    sampleData.BuechereiAutorIds.Add(buechereiId, new List<int>());
                 }
 
-                var autIds = sampleData.libAuthorsIds[buechereiId];
+                var autIds = sampleData.BuechereiAutorIds[buechereiId];
                 if (!autIds.Contains(aut.Id))
                     autIds.Add(aut.Id);
             }
