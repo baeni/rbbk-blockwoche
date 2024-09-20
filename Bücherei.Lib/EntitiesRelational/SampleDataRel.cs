@@ -40,8 +40,8 @@ public class SampleDataRel
             var relAutor = new Rel.Autor()
             {
                 AutorId = aut.Id,
-                Vorname = aut.Firstname,
-                Nachname = aut.Surname,
+                Vorname = aut.Vorname,
+                Nachname = aut.Nachname,
                 Buecher = Array.Empty<Rel.Buch>(),
                 Buechereien = Array.Empty<Rel.BuechereiRel>()
             };

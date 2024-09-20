@@ -28,8 +28,8 @@ public class SampleData
     public class Autor
     {
         public int Id { get; set; }
-        public string Firstname { get; set; }
-        public string Surname { get; set; }
+        public string Vorname { get; set; }
+        public string Nachname { get; set; }
         public int[] Buecher { get; set; }
         public int[] BuechereiIds { get; set; }
     }

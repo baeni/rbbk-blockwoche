@@ -10,8 +10,8 @@
     "{{repeat(100)}}",
     {
       "Id": "{{index(1)}}",
-      "Firstname": "{{firstName()}}",
-      "Surname": "{{firstName()}}",
+      "Vorname": "{{firstName()}}",
+      "Nachname": "{{surname()}}",
       "BuechereiIds": [
         "{{repeat(1, 3)}}",
         "{{integer(1,5)}}"

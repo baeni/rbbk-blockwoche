@@ -40,8 +40,8 @@ public class SampleDataDoc
             var relAutor = new Doc.Autor()
             {
                 Id = aut.Id,
-                Vorname = aut.Firstname,
-                Nachname = aut.Surname,
+                Vorname = aut.Vorname,
+                Nachname = aut.Nachname,
                 Buecher = Array.Empty<Doc.Buch>()
             };
             docAutoren.Add(relAutor);
