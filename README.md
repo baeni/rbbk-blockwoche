@@ -91,13 +91,13 @@ Unser Programm umfasst folgende Funktionen:
 /Projektverzeichnis
 ├── /Bücherei.Cli                # CLI-Projekt, lädt JSON-Daten und speichert diese in die Datenbanken
     ├── Program.cs               # Hauptprogramm
-    ├── sample-data.json         # Beispiel-Datensatz
 ├── /Bücherei.Lib                # Bibliothek mit Geschäftslogik
     ├── Contexts                 # Entity Framework Core Datenbankkontexte
     ├── EntitiesDocument         # Entitäten für die dokumentenbasierte Speicherung
     ├── EntitiesRelational       # Entitäten für die relationale Speicherung
     ├── Migrations               # EF Core Migrations
     ├── Services                 # Logik für Datenoperationen
+    ├── sample-data.json         # Beispiel-Datensatz
 ├── /Bücherei.Tests              # Tests für die Anwendung
     ├── DocumentTests.cs         # xUnit-Tests für die dokumentenbasierte Speicherung
     ├── RelationalTests.cs       # xUnit-Tests für die relationale Speicherung
