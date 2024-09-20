@@ -1,0 +1,18 @@
+services:
+  postgres-buechereien-rel:
+    image: postgres:latest
+    ports:
+      - 54321:5432
+    restart: always
+    environment:
+      POSTGRES_DB: "postgres-buechereien-rel"
+      POSTGRES_PASSWORD: "password1234"
+
+  postgres-buechereien-doc:
+    image: postgres:latest
+    ports:
+      - 54322:5432
+    restart: always
+    environment:
+      POSTGRES_DB: "postgres-buechereien-doc"
+      POSTGRES_PASSWORD: "password1234"
