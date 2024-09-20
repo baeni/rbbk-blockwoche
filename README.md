@@ -111,7 +111,7 @@ Mit diesem Projekt wollen wir ein tieferes Verständnis für die Unterschiede zw
 
 ## Team
 
-- **Teammitglieder**: [Name 1], [Name 2], [Name 3]  
+- **Teammitglieder**: Siehe Contrubutors  
 - **Berufsschule**: Robert-Bosch-Berufskolleg, Dortmund
 - **Ausbildung**: Fachinformatiker/in für Anwendungsentwicklung
 
