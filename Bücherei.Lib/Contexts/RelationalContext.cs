@@ -48,12 +48,6 @@ public class RelationalContext : DbContext
             .HasMany(e => e.Autoren)
             .WithMany(e => e.Buechereien)
             .UsingEntity<AutorBuecherei>();
-
-
-
-
-        modelBuilder.SeedRel();
-
     }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

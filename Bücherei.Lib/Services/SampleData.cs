@@ -95,6 +95,14 @@ public class SampleData
         return relData;
     }
 
+    public static SampleDataDoc GetDoc()
+    {
+        var data = SampleData.GetRaw();
+        var relData = new SampleDataDoc(data);
+
+        return relData;
+    }
+
 
 }
 

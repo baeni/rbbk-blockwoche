@@ -21,9 +21,6 @@ public class SampleDataRel
         this.authorBooksIds = sampleData.authorBooksIds;
         this.libAuthorsIds = sampleData.libAuthorsIds;
 
-        //var authorBooksIds = new Dictionary<int, List<int>>();
-        //var libAuthorsIds = new Dictionary<int, List<int>>();
-
         // make all libs
         foreach (SampleData.Buecherei lib in sampleData.Buechereien)
         {
@@ -64,7 +61,5 @@ public class SampleDataRel
             relBuecher.Add(relBuch);
         }
         this.buecherRel = relBuecher.ToArray();
-
-
     }
 }

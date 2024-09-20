@@ -98,14 +98,24 @@ public class TestDataGen
     public void CreateContextRel()
     {
         _output.WriteLine("Start:");
-
         RelationalContext context = new RelationalContext();
-
         _output.WriteLine("Hurra 1 !");
-
 
         var builder = new ModelBuilder();
         builder.SeedRel();
+
+        _output.WriteLine("Hurra 2 !");
+    }
+
+    [Fact]
+    public void CreateContextDoc()
+    {
+        _output.WriteLine("Start:");
+        DocumentContext context = new DocumentContext();
+        _output.WriteLine("Hurra 1 !");
+
+        var builder = new ModelBuilder();
+        builder.SeedDoc();
 
         _output.WriteLine("Hurra 2 !");
     }
