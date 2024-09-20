@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Bücherei.Lib.Contexts;
 using Xunit.Abstractions;
 
