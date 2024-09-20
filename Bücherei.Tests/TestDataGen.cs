@@ -1,22 +1,18 @@
 ﻿using System.Diagnostics;
-using System.Net.NetworkInformation;
 using Bücherei.Lib.Contexts;
 using Doc = Bücherei.Lib.EntitiesDocument;
 using Rel = Bücherei.Lib.EntitiesRelational;
 using Bücherei.Lib.EntitiesDocument;
 using Bücherei.Lib.EntitiesRelational;
 using Xunit.Abstractions;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Bücherei.Lib.Services;
-using static Bücherei.Lib.Services.SampleData;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bücherei.Tests;
 
-public class TestDataGen
+public class TestDataGen(ITestOutputHelper helper)
 {
-    private readonly RelationalContext _context;
-    private readonly ITestOutputHelper _output;
+    private readonly RelationalContext _context = new();
 
     private BuechereiRel[] buechereiRels;
     private Rel.Autor[] autorenRel;
@@ -26,18 +22,6 @@ public class TestDataGen
     private Doc.Autor[] autorenDoc;
     private Doc.Buch[] buecherDoc;
 
-    public TestDataGen(ITestOutputHelper helper)
-    {
-        _context = new RelationalContext();
-        _output = helper;
-
-
-
-
-
-
-    }
-
     //X
     [Fact]
     public async Task CreateBuecherei()
@@ -46,7 +30,7 @@ public class TestDataGen
         watch.Start();
         await CreateBuechereiAsync();
         watch.Stop();
-        _output.WriteLine($"The Db operation took {watch.ElapsedMilliseconds}ms");
+        helper.WriteLine($"The Db operation took {watch.ElapsedMilliseconds}ms");
     }
 
     private async Task CreateBuechereiAsync()
@@ -56,22 +40,8 @@ public class TestDataGen
             Name = "Benny's Buecherei"
         };
 
-        //buecherei.Autoren = new Autor[] { new Autor(), new Autor() };
-
         _context.Buechereien.Add(buecherei);
         await _context.SaveChangesAsync();
-    }
-
-    [Fact]
-    public void EmptyFact()
-    {
-        var data = SampleData.GetRaw();
-    }
-
-    [Fact]
-    public void EmptyFactBook()
-    {
-        var data = SampleData.GetBuch();
     }
 
     [Fact]
@@ -90,33 +60,23 @@ public class TestDataGen
             };
             newBuechereien.Add(newLib);
         }
-
-
     }
 
     [Fact]
     public void CreateContextRel()
     {
-        _output.WriteLine("Start:");
         RelationalContext context = new RelationalContext();
-        _output.WriteLine("Hurra 1 !");
 
         var builder = new ModelBuilder();
         builder.SeedRel();
-
-        _output.WriteLine("Hurra 2 !");
     }
 
     [Fact]
     public void CreateContextDoc()
     {
-        _output.WriteLine("Start:");
         DocumentContext context = new DocumentContext();
-        _output.WriteLine("Hurra 1 !");
 
         var builder = new ModelBuilder();
         builder.SeedDoc();
-
-        _output.WriteLine("Hurra 2 !");
     }
 }
