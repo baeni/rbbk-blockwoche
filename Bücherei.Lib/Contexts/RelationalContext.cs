@@ -1,13 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Doc = Bücherei.Lib.EntitiesDocument;
-using Rel = Bücherei.Lib.EntitiesRelational;
 using Bücherei.Lib.EntitiesRelational;
-using Bücherei.Lib.Services;
 
 namespace Bücherei.Lib.Contexts;
 
 public class RelationalContext : DbContext
 {
+    private const string CONNECTION_STRING = "Host=localhost;Port=54321;Database=postgres-buechereien-rel;Username=postgres;Password=password1234";
+    
     public DbSet<BuechereiRel> Buechereien => Set<BuechereiRel>();
 
     public DbSet<Autor> Autoren => Set<Autor>();
@@ -53,6 +52,6 @@ public class RelationalContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.EnableSensitiveDataLogging();
-        optionsBuilder.UseNpgsql("Host=localhost;Port=54321;Database=postgres-buechereien-rel;Username=postgres;Password=password1234");
+        optionsBuilder.UseNpgsql(CONNECTION_STRING);
     }
 }

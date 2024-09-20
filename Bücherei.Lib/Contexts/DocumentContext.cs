@@ -1,11 +1,12 @@
 ﻿using Bücherei.Lib.EntitiesDocument;
-using Bücherei.Lib.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bücherei.Lib.Contexts;
 
 public class DocumentContext : DbContext
 {
+    private const string CONNECTION_STRING = "Host=localhost;Port=54322;Database=postgres-buechereien-doc;Username=postgres;Password=password1234";
+    
     public DbSet<BuechereiDoc> Buechereien => Set<BuechereiDoc>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -21,6 +22,6 @@ public class DocumentContext : DbContext
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql("Host=localhost;Port=54322;Database=postgres-buechereien-doc;Username=postgres;Password=password1234");
+        optionsBuilder.UseNpgsql(CONNECTION_STRING);
     }
 }
