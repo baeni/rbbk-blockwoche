@@ -5,21 +5,26 @@ namespace Bücherei.Lib.EntitiesRelational;
 
 public class SampleDataRel
 {
-    public BuechereiRel[] buechereiRels;
-    public Autor[] autorenRel;
-    public Buch[] buecherRel;
+    public BuechereiRel[] BuechereienRel;
+    public Autor[] AutorenRel;
+    public Buch[] BuecherRel;
+    public Rel.AutorBuecherei[] AutorBuechereiJunctions;
+    
+    // Die Id's der Bücher, die einem Autor zugehörig sind
+    public Dictionary<int, List<int>> AutorBuchIds = new();
+    
+    // Die Id's der Autoren, die einer Bücherei zugehörig sind
+    public Dictionary<int, List<int>> BuechereiAutorIds = new();
 
-    public Dictionary<int, List<int>> authorBooksIds = new();
-    public Dictionary<int, List<int>> libAuthorsIds = new();
 
     public SampleDataRel (SampleData sampleData)
     {
-        var relBuechereien = new List<Rel.BuechereiRel>();
-        var relAutoren = new List<Rel.Autor>();
-        var relBuecher = new List<Rel.Buch>();
+        var buechereienRel = new List<Rel.BuechereiRel>();
+        var autorenRel = new List<Rel.Autor>();
+        var buecherRel = new List<Rel.Buch>();
 
-        this.authorBooksIds = sampleData.authorBooksIds;
-        this.libAuthorsIds = sampleData.libAuthorsIds;
+        this.AutorBuchIds = sampleData.authorBooksIds;
+        this.BuechereiAutorIds = sampleData.libAuthorsIds;
 
         // make all libs
         foreach (SampleData.Buecherei lib in sampleData.Buechereien)
@@ -30,9 +35,9 @@ public class SampleDataRel
                 Name = lib.Name,
                 Autoren = Array.Empty<Rel.Autor>()
             };
-            relBuechereien.Add(relLib);
+            buechereienRel.Add(relLib);
         }
-        this.buechereiRels = relBuechereien.ToArray();
+        this.BuechereienRel = buechereienRel.ToArray();
 
         // make all authors
         foreach (SampleData.Autor aut in sampleData.Autoren)
@@ -45,9 +50,9 @@ public class SampleDataRel
                 Buecher = Array.Empty<Rel.Buch>(),
                 Buechereien = Array.Empty<Rel.BuechereiRel>()
             };
-            relAutoren.Add(relAutor);
+            autorenRel.Add(relAutor);
         }
-        this.autorenRel = relAutoren.ToArray();
+        this.AutorenRel = autorenRel.ToArray();
 
         // make all relBooks
         foreach (SampleData.Buch buch in sampleData.Buecher)
@@ -58,8 +63,25 @@ public class SampleDataRel
                 Titel = buch.Title,
                 AutorId = buch.AutorId
             };
-            relBuecher.Add(relBuch);
+            buecherRel.Add(relBuch);
         }
-        this.buecherRel = relBuecher.ToArray();
+        this.BuecherRel = buecherRel.ToArray();
+        
+        var relData = SampleData.GetRel();
+        
+        // create n:m relation object
+        List<Rel.AutorBuecherei> autorBuechereiJunctions = new();
+
+        for (int i = 1; i <= relData.BuechereienRel.Length; i++)
+        {
+            var indexes = relData.BuechereiAutorIds[i];
+
+            for (int j = 0; j < indexes.Count; j++)
+            {
+                autorBuechereiJunctions.Add(new Rel.AutorBuecherei { AutorId = indexes[j], BuechereiId = i } );
+            }
+        }
+
+        AutorBuechereiJunctions = autorBuechereiJunctions.ToArray();
     }
 }
