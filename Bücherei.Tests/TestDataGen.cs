@@ -6,7 +6,6 @@ using Bücherei.Lib.EntitiesDocument;
 using Bücherei.Lib.EntitiesRelational;
 using Xunit.Abstractions;
 using Bücherei.Lib.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Bücherei.Tests;
 
@@ -66,17 +65,11 @@ public class TestDataGen(ITestOutputHelper helper)
     public void CreateContextRel()
     {
         RelationalContext context = new RelationalContext();
-
-        var builder = new ModelBuilder();
-        builder.SeedRel();
     }
 
     [Fact]
     public void CreateContextDoc()
     {
         DocumentContext context = new DocumentContext();
-
-        var builder = new ModelBuilder();
-        builder.SeedDoc();
     }
 }
