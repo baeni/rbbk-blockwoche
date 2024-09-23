@@ -1,6 +1,4 @@
-﻿using Bücherei.Lib.Services;
-using Newtonsoft.Json.Serialization;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace Bücherei.Tests;
 
