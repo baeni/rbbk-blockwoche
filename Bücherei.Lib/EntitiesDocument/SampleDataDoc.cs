@@ -5,9 +5,9 @@ namespace Bücherei.Lib.EntitiesDocument;
 
 public class SampleDataDoc
 {
-    public BuechereiDoc[] BuechereienDoc;
-    public Autor[] AutorenDoc;
-    public Buch[] BuecherDoc;
+    public List<BuechereiDoc> BuechereienDoc;
+    public List<Autor> AutorenDoc;
+    public List<Buch> BuecherDoc;
 
     // Die Id's der Bücher, die einem Autor zugehörig sind
     public Dictionary<int, List<int>> AutorBuchIds = new();
@@ -35,7 +35,7 @@ public class SampleDataDoc
             };
             buechereienDoc.Add(relLib);
         }
-        this.BuechereienDoc = buechereienDoc.ToArray();
+        this.BuechereienDoc = buechereienDoc;
 
         // make all Autoren
         foreach (SampleData.Autor aut in sampleData.Autoren)
@@ -44,12 +44,11 @@ public class SampleDataDoc
             {
                 Id = aut.Id,
                 Vorname = aut.Vorname,
-                Nachname = aut.Nachname,
-                Buecher = Array.Empty<Doc.Buch>()
+                Nachname = aut.Nachname
             };
             autorenDoc.Add(relAutor);
         }
-        this.AutorenDoc = autorenDoc.ToArray();
+        this.AutorenDoc = autorenDoc;
 
         // make all Bücher
         foreach (SampleData.Buch buch in sampleData.Buecher)
@@ -61,7 +60,7 @@ public class SampleDataDoc
             };
             buecherDoc.Add(relBuch);
         }
-        this.BuecherDoc = buecherDoc.ToArray();
+        this.BuecherDoc = buecherDoc;
 
         // assign Bücher to Autoren
         foreach (Doc.Autor aut in autorenDoc)
@@ -71,7 +70,7 @@ public class SampleDataDoc
             foreach (int bIndex in bookIndexes) {
                 authBooks.Add(buecherDoc[bIndex -1]);
             }
-            aut.Buecher = authBooks.ToArray();
+            aut.Buecher = authBooks;
         }
 
         // assign Autoren to Büchereien
@@ -83,7 +82,7 @@ public class SampleDataDoc
             {
                 libAuthors.Add(autorenDoc[aIndex -1]);
             }
-            lib.Autoren = libAuthors.ToArray();
+            lib.Autoren = libAuthors;
         }
     }
 }

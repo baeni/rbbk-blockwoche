@@ -17,7 +17,7 @@ public class RelationalTests : IClassFixture<OutputDataFixture>
     private readonly RelationalContext _context;
     private readonly ITestOutputHelper _output;
 
-    public RelationalTests(OutputDataFixture fixture ,ITestOutputHelper helper)
+    public RelationalTests(OutputDataFixture fixture, ITestOutputHelper helper)
     {
         _outputDataFixture = fixture;
         _outputDataRel = fixture._outputDataRel;
@@ -85,9 +85,69 @@ public class RelationalTests : IClassFixture<OutputDataFixture>
     }
 
     //SEARCH TESTS:
+    [Fact]
+    public async Task Search_5Libraries_50Authors_500Books()
+    {
+        var data = SampleData.GetRel(sdSmallPath);
+        Stopwatch sw = Stopwatch.StartNew();
+        sw.Start();
+        _context.Database.BeginTransaction();
+        _context.Buechereien.AddRange(data.BuechereienRel);
+        _context.Autoren.AddRange(data.AutorenRel);
+        _context.Buecher.AddRange(data.BuecherRel);
+        _context.AddRange(data.AutorBuechereiJunctions);
 
+        // hier noch nach ein paar Büchern suchen:
+        // z.b Context. suche nach allen Büchern mit Buchstabe "A" im Titel.
 
+        await _context.Database.RollbackTransactionAsync();
 
+        sw.Stop();
+        _output.WriteLine(sw.Elapsed.ToString());
+        this._outputDataRel.CreateSmall.Add(sw.Elapsed);
+    }
 
+    [Fact]
+    public async Task Search_50Libraries_500Authors_5000Books()
+    {
+        var data = SampleData.GetRel(sdMediumPath);
+        Stopwatch sw = Stopwatch.StartNew();
+        sw.Start();
+        _context.Database.BeginTransaction();
+        _context.Buechereien.AddRange(data.BuechereienRel);
+        _context.Autoren.AddRange(data.AutorenRel);
+        _context.Buecher.AddRange(data.BuecherRel);
+        _context.AddRange(data.AutorBuechereiJunctions);
 
+        // hier noch nach ein paar Büchern suchen:
+        // z.b Context. suche nach allen Büchern mit Buchstabe "A" im Titel.
+
+        await _context.Database.RollbackTransactionAsync();
+
+        sw.Stop();
+        _output.WriteLine(sw.Elapsed.ToString());
+        this._outputDataRel.CreateMedium.Add(sw.Elapsed);
+    }
+
+    [Fact]
+    public async Task Search_500Libraries_5000Authors_50000Books()
+    {
+        var data = SampleData.GetRel(sdLargePath);
+        Stopwatch sw = Stopwatch.StartNew();
+        sw.Start();
+        _context.Database.BeginTransaction();
+        _context.Buechereien.AddRange(data.BuechereienRel);
+        _context.Autoren.AddRange(data.AutorenRel);
+        _context.Buecher.AddRange(data.BuecherRel);
+        _context.AddRange(data.AutorBuechereiJunctions);
+
+        // hier noch nach ein paar Büchern suchen:
+        // z.b Context. suche nach allen Büchern mit Buchstabe "A" im Titel.
+
+        await _context.Database.RollbackTransactionAsync();
+
+        sw.Stop();
+        _output.WriteLine(sw.Elapsed.ToString());
+        this._outputDataRel.CreateLarge.Add(sw.Elapsed);
+    }
 }

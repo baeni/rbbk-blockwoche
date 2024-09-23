@@ -6,5 +6,5 @@ public class BuechereiDoc
 
     public required string Name { get; set; }
 
-    public ICollection<Autor> Autoren { get; set; } = [];
+    public ICollection<Autor> Autoren { get; set; } = new List<Autor>();
 }
