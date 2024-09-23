@@ -1,5 +1,6 @@
 using Bücherei.Lib.Contexts;
 using Bücherei.Lib.Services;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Xunit.Abstractions;
 
@@ -86,7 +87,8 @@ public class DocumentTests : IClassFixture<OutputDataFixture>
         _context.Database.BeginTransaction();
         _context.Buechereien.AddRange(data.BuechereienDoc);
 
-        // hier noch nach ein paar Büchern suchen:
+        var buch = _context.Buechereien.AsNoTracking().
+            Where(c => c.Autoren.Any(c => c.Id == 4)).Select(c => c.Autoren).FirstOrDefault().Select(c => c.Buecher).ToList();
         // z.b Context. suche nach allen Büchern mit Buchstabe "A" im Titel.
 
         await _context.Database.RollbackTransactionAsync();

@@ -84,7 +84,7 @@ public class RelationalTests : IClassFixture<OutputDataFixture>
         this._outputDataRel.CreateLarge.Add(sw.Elapsed);
     }
 
-    //SEARCH TESTS:
+    //SEARCH TESTS SINGLE ITEM:
     [Fact]
     public async Task Search_5Libraries_50Authors_500Books()
     {
@@ -97,14 +97,14 @@ public class RelationalTests : IClassFixture<OutputDataFixture>
         _context.Buecher.AddRange(data.BuecherRel);
         _context.AddRange(data.AutorBuechereiJunctions);
 
-        // hier noch nach ein paar Büchern suchen:
+        var buch = _context.Buecher.Where(c => c.BuchId == 17).ToList();
         // z.b Context. suche nach allen Büchern mit Buchstabe "A" im Titel.
 
         await _context.Database.RollbackTransactionAsync();
 
         sw.Stop();
         _output.WriteLine(sw.Elapsed.ToString());
-        this._outputDataRel.CreateSmall.Add(sw.Elapsed);
+        this._outputDataRel.SearchSmall.Add(sw.Elapsed);
     }
 
     [Fact]
@@ -119,14 +119,14 @@ public class RelationalTests : IClassFixture<OutputDataFixture>
         _context.Buecher.AddRange(data.BuecherRel);
         _context.AddRange(data.AutorBuechereiJunctions);
 
-        // hier noch nach ein paar Büchern suchen:
+        var buch = _context.Buecher.Where(c => c.BuchId == 4536).ToList();
         // z.b Context. suche nach allen Büchern mit Buchstabe "A" im Titel.
 
         await _context.Database.RollbackTransactionAsync();
 
         sw.Stop();
         _output.WriteLine(sw.Elapsed.ToString());
-        this._outputDataRel.CreateMedium.Add(sw.Elapsed);
+        this._outputDataRel.SearchMedium.Add(sw.Elapsed);
     }
 
     [Fact]
@@ -141,9 +141,73 @@ public class RelationalTests : IClassFixture<OutputDataFixture>
         _context.Buecher.AddRange(data.BuecherRel);
         _context.AddRange(data.AutorBuechereiJunctions);
 
-        // hier noch nach ein paar Büchern suchen:
+        var buch = _context.Buecher.Where(c => c.BuchId == 6453).ToList();
         // z.b Context. suche nach allen Büchern mit Buchstabe "A" im Titel.
 
+        await _context.Database.RollbackTransactionAsync();
+
+        sw.Stop();
+        _output.WriteLine(sw.Elapsed.ToString());
+        this._outputDataRel.SearchLarge.Add(sw.Elapsed);
+    }
+
+    // SEARCH TESTS MANY ITEMS:
+    [Fact]
+    public async Task Search_Many_5Libraries_50Authors_500Books()
+    {
+        var data = SampleData.GetRel(sdSmallPath);
+        Stopwatch sw = Stopwatch.StartNew();
+        sw.Start();
+        _context.Database.BeginTransaction();
+        _context.Buechereien.AddRange(data.BuechereienRel);
+        _context.Autoren.AddRange(data.AutorenRel);
+        _context.Buecher.AddRange(data.BuecherRel);
+        _context.AddRange(data.AutorBuechereiJunctions);
+
+        var buch = _context.Buecher.Where(b => b.Titel.StartsWith("m")).ToList();
+
+        await _context.Database.RollbackTransactionAsync();
+
+        sw.Stop();
+        _output.WriteLine(sw.Elapsed.ToString());
+        this._outputDataRel.CreateSmall.Add(sw.Elapsed);
+    }
+
+    [Fact]
+    public async Task Search_Many_50Libraries_500Authors_5000Books()
+    {
+        var data = SampleData.GetRel(sdMediumPath);
+        Stopwatch sw = Stopwatch.StartNew();
+        sw.Start();
+        _context.Database.BeginTransaction();
+        _context.Buechereien.AddRange(data.BuechereienRel);
+        _context.Autoren.AddRange(data.AutorenRel);
+        _context.Buecher.AddRange(data.BuecherRel);
+        _context.AddRange(data.AutorBuechereiJunctions);
+
+        var buch = _context.Buecher.Where(b => b.Titel.StartsWith("m")).ToList();
+
+        await _context.Database.RollbackTransactionAsync();
+
+        sw.Stop();
+        _output.WriteLine(sw.Elapsed.ToString());
+        this._outputDataRel.CreateMedium.Add(sw.Elapsed);
+    }
+
+    [Fact]
+    public async Task Search_Many_500Libraries_5000Authors_50000Books()
+    {
+        var data = SampleData.GetRel(sdLargePath);
+        Stopwatch sw = Stopwatch.StartNew();
+        sw.Start();
+        _context.Database.BeginTransaction();
+        _context.Buechereien.AddRange(data.BuechereienRel);
+        _context.Autoren.AddRange(data.AutorenRel);
+        _context.Buecher.AddRange(data.BuecherRel);
+        _context.AddRange(data.AutorBuechereiJunctions);
+
+        var buch = _context.Buecher.Where(b => b.Titel.StartsWith("m")).ToList();
+        
         await _context.Database.RollbackTransactionAsync();
 
         sw.Stop();
