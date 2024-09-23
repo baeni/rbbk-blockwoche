@@ -17,7 +17,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="sample-data.json">
+      <None Update="sampledata\sample-data-large.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="sampledata\sample-data-medium.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="sampledata\sample-data-small.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>

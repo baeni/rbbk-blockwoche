@@ -7,3 +7,6 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+
+# XUnit test project output
+/Bücherei.Tests/testdata_output/

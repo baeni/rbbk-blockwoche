@@ -9,8 +9,6 @@ namespace Bücherei.Lib.Services;
 
 public class SampleData
 {
-    private const string FILE_PATH = "./sample-data.json";
-    
     public SampleData.Buecherei[] Buechereien { get; set; }
     public SampleData.Autor[] Autoren { get; set; }
     public SampleData.Buch[] Buecher { get; set; }
@@ -44,9 +42,9 @@ public class SampleData
         public int AutorId { get; set; }
     }
 
-    public static SampleData GetRaw()
+    public static SampleData GetRaw(string filePath)
     {
-        var sampleDataJson = File.ReadAllText(FILE_PATH);
+        var sampleDataJson = File.ReadAllText(filePath);
         var sampleData = JsonSerializer.Deserialize<SampleData>(sampleDataJson);
 
         // fill AutorBuchIds
@@ -80,17 +78,17 @@ public class SampleData
         return sampleData;
     }
 
-    public static SampleDataRel GetRel()
+    public static SampleDataRel GetRel(string filePath)
     {
-        var data = SampleData.GetRaw();
+        var data = SampleData.GetRaw(filePath);
         var relData = new SampleDataRel(data);
 
         return relData;
     }
 
-    public static SampleDataDoc GetDoc()
+    public static SampleDataDoc GetDoc(string filePath)
     {
-        var data = SampleData.GetRaw();
+        var data = SampleData.GetRaw(filePath);
         var relData = new SampleDataDoc(data);
 
         return relData;

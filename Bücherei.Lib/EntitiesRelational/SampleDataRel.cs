@@ -5,10 +5,10 @@ namespace Bücherei.Lib.EntitiesRelational;
 
 public class SampleDataRel
 {
-    public BuechereiRel[] BuechereienRel;
-    public Autor[] AutorenRel;
-    public Buch[] BuecherRel;
-    public Rel.AutorBuecherei[] AutorBuechereiJunctions;
+    public List<BuechereiRel> BuechereienRel;
+    public List<Autor> AutorenRel;
+    public List<Buch> BuecherRel;
+    public List<Rel.AutorBuecherei> AutorBuechereiJunctions;
     
     // Die Id's der Bücher, die einem Autor zugehörig sind
     public Dictionary<int, List<int>> AutorBuchIds = new();
@@ -33,11 +33,11 @@ public class SampleDataRel
             {
                 BuechereiId = lib.Id,
                 Name = lib.Name,
-                Autoren = Array.Empty<Rel.Autor>()
+                Autoren = new List<Rel.Autor>()
             };
             buechereienRel.Add(relLib);
         }
-        this.BuechereienRel = buechereienRel.ToArray();
+        this.BuechereienRel = buechereienRel;
 
         // make all Autoren
         foreach (SampleData.Autor aut in sampleData.Autoren)
@@ -47,12 +47,12 @@ public class SampleDataRel
                 AutorId = aut.Id,
                 Vorname = aut.Vorname,
                 Nachname = aut.Nachname,
-                Buecher = Array.Empty<Rel.Buch>(),
-                Buechereien = Array.Empty<Rel.BuechereiRel>()
+                Buecher = new List<Rel.Buch>(),
+                Buechereien = new List<Rel.BuechereiRel>()
             };
             autorenRel.Add(relAutor);
         }
-        this.AutorenRel = autorenRel.ToArray();
+        this.AutorenRel = autorenRel;
 
         // make all Bücher
         foreach (SampleData.Buch buch in sampleData.Buecher)
@@ -65,16 +65,14 @@ public class SampleDataRel
             };
             buecherRel.Add(relBuch);
         }
-        this.BuecherRel = buecherRel.ToArray();
-        
-        var relData = SampleData.GetRel();
+        this.BuecherRel = buecherRel;
         
         // create n:m relation object
         List<Rel.AutorBuecherei> autorBuechereiJunctions = new();
 
-        for (int i = 1; i <= relData.BuechereienRel.Length; i++)
+        for (int i = 1; i <= buechereienRel.Count; i++)
         {
-            var indexes = relData.BuechereiAutorIds[i];
+            var indexes = BuechereiAutorIds[i];
 
             for (int j = 0; j < indexes.Count; j++)
             {
@@ -82,6 +80,6 @@ public class SampleDataRel
             }
         }
 
-        AutorBuechereiJunctions = autorBuechereiJunctions.ToArray();
+        AutorBuechereiJunctions = autorBuechereiJunctions;
     }
 }

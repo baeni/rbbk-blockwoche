@@ -8,7 +8,7 @@ public class Autor
 
     public required string Nachname { get; set; } = null!;
 
-    public ICollection<Buch> Buecher { get; set; } = [];
+    public ICollection<Buch> Buecher { get; set; } = new List<Buch>();
 
-    public ICollection<BuechereiRel> Buechereien { get; set; } = [];
+    public ICollection<BuechereiRel> Buechereien { get; set; } = new List<BuechereiRel>();
 }
